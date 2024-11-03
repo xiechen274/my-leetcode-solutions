@@ -32,4 +32,205 @@
 
 ## 链表
 
+## 栈和队列
 
+栈是一种逻辑结构，可以用不同的数据结构去实现
+
+**队列**：先进先出，从尾进，从头出
+
+**栈**：先进后出
+
+### 队列
+
+两个指针，LR
+
+- 加入的数确定的时候 ，数组实现。比较方便，单项，数组的范围是[l,r)左闭右开，r的下标是即将进入的数存放的地方
+
+![image-20241103172534137](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241103172534137.png)
+
+- 用java原生实现的队列，用LinkList双向链表
+
+  *缺点：常数时间慢* o（1）
+
+  ```java
+  public static class Queue1 {
+  
+  		// java中的双向链表LinkedList
+  		// 单向链表就足够了
+  		public Queue<Integer> queue = new LinkedList<>();
+  
+  		// 调用任何方法之前，先调用这个方法来判断队列内是否有东西
+  		public boolean isEmpty() {
+  			return queue.isEmpty();
+  		}
+  
+  		// 向队列中加入num，加到尾巴
+  		public void offer(int num) {
+  			queue.offer(num);
+  		}
+  
+  		// 从队列拿，从头拿
+  		public int poll() {
+  			return queue.poll();
+  		}
+  
+  		// 返回队列头的元素但是不弹出
+  		public int peek() {
+  			return queue.peek();
+  		}
+  
+  		// 返回目前队列里有几个数
+  		public int size() {
+  			return queue.size();
+  		}
+  
+  	}
+  ```
+
+  
+
+- 数组实现队列
+
+```java
+//l .... r
+
+// 实际刷题时更常见的写法，常数时间好
+	// 如果可以确定加入操作的总次数不超过n，那么可以用
+	// 一般笔试、面试都会有一个明确数据量，所以这是最常用的方式
+	public static class Queue2 {
+
+		public int[] queue;
+		public int l;
+		public int r;
+
+		// 加入操作的总次数上限是多少，一定要明确
+		public Queue2(int n) {
+			queue = new int[n];
+			l = 0;
+			r = 0;
+		}
+
+		// 调用任何方法之前，先调用这个方法来判断队列内是否有东西
+		public boolean isEmpty() {
+			return l == r;
+		}
+
+		public void offer(int num) {
+			queue[r++] = num;
+		}
+
+		public int poll() {
+			return queue[l++];
+		}
+		// ?
+		// l...r-1 r
+		// [l..r)
+		public int head() {
+			return queue[l];
+		}
+
+		public int tail() {
+			return queue[r - 1];
+		}
+
+		public int size() {
+			return r - l;
+		}
+
+	}
+```
+
+### 栈
+
+- 数组实现栈
+
+![image-20241103173624287](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241103173624287.png)
+
+**在弹出的时候**，没有必要删除掉原来的数据，size来决定有效范围就好了，相当简单
+
+#### java原生实现
+
+```java
+// 直接用java内部的实现
+// 其实就是动态数组，不过常数时间并不好
+public static class Stack1 {
+
+    public Stack<Integer> stack = new Stack<>();
+
+    // 调用任何方法之前，先调用这个方法来判断栈内是否有东西
+    public boolean isEmpty() {
+       return stack.isEmpty();
+    }
+
+    public void push(int num) {
+       stack.push(num);
+    }
+
+    public int pop() {
+       return stack.pop();
+    }
+
+    public int peek() {
+       return stack.peek();
+    }
+
+    public int size() {
+       return stack.size();
+    }
+
+}
+```
+
+#### 数组实现
+
+```java
+// 实际刷题时更常见的写法，常数时间好
+// 如果可以保证同时在栈里的元素个数不会超过n，那么可以用
+// 也就是发生弹出操作之后，空间可以复用
+// 一般笔试、面试都会有一个明确数据量，所以这是最常用的方式
+public static class Stack2 {
+
+    public int[] stack;
+    public int size;
+
+    // 同时在栈里的元素个数不会超过n
+    public Stack2(int n) {
+       stack = new int[n];
+       size = 0;
+    }
+
+    // 调用任何方法之前，先调用这个方法来判断栈内是否有东西
+    public boolean isEmpty() {
+       return size == 0;
+    }
+
+    public void push(int num) {
+       stack[size++] = num;
+    }
+
+    public int pop() {
+       return stack[--size];
+    }
+
+    public int peek() {
+       return stack[size - 1];
+    }
+
+    public int size() {
+       return size;
+    }
+
+}
+```
+
+
+
+#### 循环队列
+
+![image-20241103181809582](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241103181809582.png)
+
+**循环队列的实现**
+
+通过新增一个size变量来控制队列的行为
+
+![image-20241103182544586](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241103182544586.png)
