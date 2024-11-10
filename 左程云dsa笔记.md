@@ -307,3 +307,19 @@ class MyCircularQueue {
 
 }
 ```
+
+### 栈和队列互相实现
+
+![image-20241110131147596](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241110131147596.png)
+
+实现的逻辑
+
+![image-20241110131734624](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241110131734624.png)
+
+![image-20241110132156169](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241110132156169.png)
+
+用队列实现栈
+
+![image-20241110135759279](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241110135759279.png)
+
+- 用栈实现队列最核心的就是在每次push pop peek类似的方法前先对in out 的stack进行是否到数据的判断，这是核心思想
