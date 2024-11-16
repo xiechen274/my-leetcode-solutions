@@ -307,3 +307,11 @@ class MyCircularQueue {
 
 }
 ```
+
+## 二叉树及三种序递归遍历
+
+![image-20241116175536950](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241116175536950.png)
+
+拿后续遍历举个例子
+
+![image-20241116180740263](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241116180740263.png)
