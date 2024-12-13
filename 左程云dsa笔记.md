@@ -324,10 +324,146 @@ class MyCircularQueue {
 
 - 用栈实现队列最核心的就是在每次push pop peek类似的方法前先对in out 的stack进行是否到数据的判断，这是核心思想
 
-## 二叉树及三种序递归遍历
+## 二叉树及三种序遍历
 
 ![image-20241116175536950](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241116175536950.png)
 
 拿后续遍历举个例子
 
 ![image-20241116180740263](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241116180740263.png)
+
+递归实现非常简单，举两个列子理解就好了，先遍历那个就先打印谁，然后再递归遍历其他部分
+
+```java
+// 先序打印所有节点，递归版
+public static void preOrder(TreeNode head) {
+    if (head == null) {
+       return;
+    }
+    System.out.print(head.val + " ");
+    preOrder(head.left);
+    preOrder(head.right);
+}
+
+// 中序打印所有节点，递归版
+public static void inOrder(TreeNode head) {
+    if (head == null) {
+       return;
+    }
+    inOrder(head.left);
+    System.out.print(head.val + " ");
+    inOrder(head.right);
+}
+```
+
+### 非递归遍历
+
+![image-20241116182431341](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241116182431341.png)
+
+```java
+// 先序打印所有节点，非递归版
+public static void preOrder(TreeNode head) {
+    if (head != null) {
+       Stack<TreeNode> stack = new Stack<>();
+       stack.push(head);
+       while (!stack.isEmpty()) {
+          head = stack.pop();
+          System.out.print(head.val + " ");
+          if (head.right != null) {
+             stack.push(head.right);
+          }
+          if (head.left != null) {
+             stack.push(head.left);
+          }
+       }
+       System.out.println();
+    }
+}
+
+// 中序打印所有节点，非递归版
+public static void inOrder(TreeNode head) {
+    if (head != null) {
+       Stack<TreeNode> stack = new Stack<>();
+       while (!stack.isEmpty() || head != null) {
+          if (head != null) {
+             stack.push(head);
+             head = head.left;
+          } else {
+             head = stack.pop();
+             System.out.print(head.val + " ");
+             head = head.right;
+          }
+       }
+       System.out.println();
+    }
+}
+
+// 后序打印所有节点，非递归版
+// 这是用两个栈的方法
+public static void posOrderTwoStacks(TreeNode head) {
+    if (head != null) {
+       Stack<TreeNode> stack = new Stack<>();
+       Stack<TreeNode> collect = new Stack<>();
+       stack.push(head);
+       while (!stack.isEmpty()) {
+          head = stack.pop();
+          collect.push(head);
+          if (head.left != null) {
+             stack.push(head.left);
+          }
+          if (head.right != null) {
+             stack.push(head.right);
+          }
+       }
+       while (!collect.isEmpty()) {
+          System.out.print(collect.pop().val + " ");
+       }
+       System.out.println();
+    }
+}
+
+// 后序打印所有节点，非递归版
+// 这是用一个栈的方法
+public static void posOrderOneStack(TreeNode h) {
+    if (h != null) {
+       Stack<TreeNode> stack = new Stack<>();
+       stack.push(h);
+       // 如果始终没有打印过节点，h就一直是头节点
+       // 一旦打印过节点，h就变成打印节点
+       // 之后h的含义 : 上一次打印的节点
+       while (!stack.isEmpty()) {
+          TreeNode cur = stack.peek();
+          if (cur.left != null && h != cur.left && h != cur.right) {
+             // 有左树且左树没处理过
+             stack.push(cur.left);
+          } else if (cur.right != null && h != cur.right) {
+             // 有右树且右树没处理过
+             stack.push(cur.right);
+          } else {
+             // 左树、右树 没有 或者 都处理过了
+             System.out.print(cur.val + " ");
+             h = stack.pop();
+          }
+       }
+       System.out.println();
+    }
+}
+```
+
+非递归中序遍历
+
+每个子树都要处理完自己的左树在处理自己在处理右树
+
+![image-20241116190827421](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241116190827421.png)
+
+后序遍历，可以用先序遍历的反转，再用一个栈收集弹出的数，然后再对这个栈打印
+
+![image-20241116191729920](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241116191729920.png)
+
+**一个栈的后序遍历**
+
+### 复杂度
+
+递归和非递归的事件复杂度都是O(h) h是树的高度，因为每次遍历同一层虽然有很多数据但是只会消耗一个空间来读取，在读取别的数据了之后这空间就被复用到其他的空间上了
+
+![image-20241116194646127](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241116194646127.png)
