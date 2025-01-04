@@ -1,3 +1,35 @@
+# 基础知识
+
+## 左移右移
+
+- x << n **除2**
+
+```
+int x = 3; // 二进制: 0000 0011
+int result = x << 2; // 向左移动 2 位: 0000 1100
+System.out.println(result); // 输出: 12
+
+```
+
+
+
+- x >> n **乘2**
+
+# 处理输入输出
+
+- 1）填函数风格
+
+- 2）acm风格（笔试、比赛最常见）
+      a. 规定数据量(BufferedReader、StreamTokenizer、PrintWriter)，其他语言有对等的写法
+      b. 按行读(BufferedReader、PrintWriter)，其他语言有对等的写法
+      c. 不要用Scanner、System.out，IO效率慢
+  3）不推荐：临时动态空间
+  4）推荐：全局静态空间
+
+全局静态空间就是再一开始就定义好辅助数组
+
+![image-20241216100446881](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241216100446881.png)
+
 # 时间复杂度
 
 ![image-20240710174422149](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20240710174422149.png)
@@ -467,3 +499,122 @@ public static void posOrderOneStack(TreeNode h) {
 递归和非递归的事件复杂度都是O(h) h是树的高度，因为每次遍历同一层虽然有很多数据但是只会消耗一个空间来读取，在读取别的数据了之后这空间就被复用到其他的空间上了
 
 ![image-20241116194646127](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20241116194646127.png)
+
+# 排序
+
+## 归并排序
+
+
+
+- 归并的时候左右相等优先拷贝左边，**保证稳定性**
+
+![image-20250104195035849](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20250104195035849.png)
+
+- 递归
+
+**取中位数，然后不断分区间，排序区间，然后合并区间**
+
+- 非递归
+
+非递归不是直接通过中位数，而是通过步长，从1开始，**保证每个步长区间内的有序**，然后归并
+
+**如果步长不够左右**，就单独成块，最后在归并
+
+![image-20250104202726691](https://raw.githubusercontent.com/xiechen274/ChenCsNote/images/images/image-20250104202726691.png)
+
+**步长的每次迭代<<= 1**,左移1，相当于×2
+
+### 复杂度
+
+- O(nlog(n))
+
+### code
+
+- 递归版
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
+
+/**
+ * @author xlj 2025-01-04
+ * https://www.luogu.com.cn/problem/P1177
+ * acm风格
+ */
+public class MergeSort {
+    //递归写法
+    public static int MAXN = 10001;
+
+    public static int[] arr = new int[MAXN];
+
+    public  static int[] help = new int[MAXN];
+
+    public static int n;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StreamTokenizer in = new StreamTokenizer(br);
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        in.nextToken();
+        //nval默认返回的是double
+        n = (int) in.nval; //读取数组长度
+        for(int i = 0; i < n; i++){
+            in.nextToken();
+            arr[i] = (int) in.nval;
+        }
+        mergeSortByRecursion(0, n - 1);
+        //输出排序后的数组
+        for(int i = 0; i < n - 1; i++){
+            out.print(arr[i] + " ");
+        }
+        out.print(arr[n - 1]);
+        //关闭流
+        out.flush();
+        out.close();
+        br.close();
+    }
+
+    //由于定义静态变量所以不需要传入数组
+    private static void mergeSortByRecursion(int l, int r) {
+        if(l == r){
+            return;
+        }
+        int mid = (l + r) / 2;
+        //排序左右边
+        mergeSortByRecursion(l, mid);
+        mergeSortByRecursion(mid + 1, r);
+        //归并
+        merge(l, mid, r);
+
+    }
+
+    private static void merge(int l, int mid, int r) {
+        int pointL = l;
+        int pointR = mid + 1;
+        int index = l; //help数组的下标
+
+        //移动左右区间的指针开始归并
+        while(pointL <= mid && pointR <= r){
+            //如果相等的话就取左边的，保证稳定性
+            help[index++] = arr[pointL] <= arr[pointR] ? arr[pointL++] : arr[pointR++];//谁小取谁
+        }
+        //将剩余的数放入help数组中
+        while(pointL <= mid){
+            help[index++] = arr[pointL++];
+        }
+        while(pointR <= r){
+            help[index++] = arr[pointR++];
+        }
+        for(int i = l; i <= r; i++){
+            arr[i] = help[i];
+        }
+    }
+
+}
+
+```
+
