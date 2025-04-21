@@ -25,7 +25,7 @@ public class AlternatePrintWithoutLock {
             while (num <= M) {
                 if (currentThreadId == threadId) {
                     if (num > M) break;
-                    System.out.println("线程 " + threadId + ": " + num);
+                    System.out.println("线程 " + (threadId + 1) + ": " + num);
                     num++;
                     currentThreadId = (currentThreadId + 1) % n;
                 } else {
