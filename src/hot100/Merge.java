@@ -38,7 +38,10 @@ public class Merge {
     public static void main(String[] args) {
         Merge merge = new Merge();
         int[][] merge1 = merge.merge(new int[][]{{1, 3}, {2, 6}, {8, 10}, {15, 18}});
-        System.out.println(merge1);
+        //打印数组
+        for (int[] ints : merge1) {
+            System.out.print(Arrays.toString(ints));
+        }
 
     }
 }
