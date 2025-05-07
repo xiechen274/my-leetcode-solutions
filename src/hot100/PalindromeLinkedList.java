@@ -5,18 +5,18 @@ package hot100;
  */
 
 /**
- * LeetCode 234: »ØÎÄÁ´±í
- * ÌâÄ¿Á´½Ó: https://leetcode.cn/problems/palindrome-linked-list/
+ * LeetCode 234: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½: https://leetcode.cn/problems/palindrome-linked-list/
  *
- * ÌâÄ¿ÃèÊö:
- * ¸øÄãÒ»¸öµ¥Á´±íµÄÍ·½Úµã head £¬ÅÐ¶Ï¸ÃÁ´±íÊÇ·ñÎª»ØÎÄÁ´±í¡£
+ * ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½:
+ * ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Úµï¿½ head ï¿½ï¿½ï¿½Ð¶Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  *
- * Ê¾Àý:
- * ÊäÈë: head = [1,2,2,1]
- * Êä³ö: true
+ * Ê¾ï¿½ï¿½:
+ * ï¿½ï¿½ï¿½ï¿½: head = [1,2,2,1]
+ * ï¿½ï¿½ï¿½: true
  *
- * ½ø½×:
- * ÄãÄÜ·ñÓÃ O(n) Ê±¼ä¸´ÔÓ¶ÈºÍ O(1) ¿Õ¼ä¸´ÔÓ¶È½â¾ö´ËÌâ£¿
+ * ï¿½ï¿½ï¿½ï¿½:
+ * ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½ O(n) Ê±ï¿½ä¸´ï¿½Ó¶Èºï¿½ O(1) ï¿½Õ¼ä¸´ï¿½Ó¶È½ï¿½ï¿½ï¿½ï¿½ï¿½â£¿
  */
 
 class ListNode {
@@ -27,8 +27,10 @@ class ListNode {
         this.val = val;
     }
 
+    ListNode(){}
+
     /**
-     * ¾²Ì¬·½·¨£¬ÓÃÓÚÉú³ÉÁ´±í
+     * ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     static ListNode createList(int[] values) {
         ListNode dummy = new ListNode(0);
@@ -41,7 +43,7 @@ class ListNode {
     }
 
     /**
-     * ´òÓ¡Á´±í
+     * ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½
      */
     static void printList(ListNode head) {
         ListNode current = head;
@@ -56,9 +58,9 @@ class ListNode {
 public class PalindromeLinkedList {
 
     /**
-     * ÅÐ¶ÏÁ´±íÊÇ·ñÎª»ØÎÄÁ´±íµÄ·½·¨
-     * @param head Á´±íÍ·½Úµã
-     * @return ÊÇ·ñÎª»ØÎÄÁ´±í
+     * ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
+     * @param head ï¿½ï¿½ï¿½ï¿½Í·ï¿½Úµï¿½
+     * @return ï¿½Ç·ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public static boolean isPalindrome(ListNode head) {
         int[] nodeVal = new int[1000];
@@ -86,20 +88,20 @@ public class PalindromeLinkedList {
 
         boolean[] expectedOutputs = {true, false, true, true, false};
 
-        System.out.println("ÔËÐÐ²âÊÔÓÃÀý...");
+        System.out.println("ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...");
 
         for (int i = 0; i < testCases.length; i++) {
             int[] testCase = testCases[i];
             boolean expected = expectedOutputs[i];
             ListNode head = ListNode.createList(testCase);
 
-            System.out.println("²âÊÔÓÃÀý " + (i + 1) + ": ÊäÈëÁ´±í = ");
+            System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ " + (i + 1) + ": ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ = ");
             ListNode.printList(head);
 
             boolean result = isPalindrome(head);
 
-            System.out.println("Ô¤ÆÚÊä³ö: " + expected + ", Êµ¼ÊÊä³ö: " + result);
-            System.out.println(result == expected ? "? ²âÊÔÍ¨¹ý" : "? ²âÊÔÊ§°Ü");
+            System.out.println("Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½: " + expected + ", Êµï¿½ï¿½ï¿½ï¿½ï¿½: " + result);
+            System.out.println(result == expected ? "? ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½" : "? ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½");
             System.out.println("--------------------------");
         }
     }
