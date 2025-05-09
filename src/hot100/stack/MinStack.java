@@ -6,6 +6,7 @@ import java.lang.management.MonitorInfo;
  * @author xlj
  * @date 2025-05-08
  * @description 最小栈
+ * 核心思路: 使用一个辅助数组来维护最小值，才能保证时间复杂度为o1
  */
 
 public class MinStack {
