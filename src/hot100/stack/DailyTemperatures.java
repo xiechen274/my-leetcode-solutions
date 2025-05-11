@@ -1,5 +1,8 @@
 package hot100.stack;
 
+import java.util.Stack;
+
+
 /**
  * @author xlj
  * @date 2025-05-09
@@ -8,6 +11,7 @@ package hot100.stack;
 
 public class DailyTemperatures {
 
+    //暴力解法，会超时
     public int[] dailyTemperatures1(int[] temperatures) {
         if(temperatures.length == 1){
             return new int[]{0};
@@ -29,21 +33,35 @@ public class DailyTemperatures {
         return retArr;
     }
 
-    public static void main(String[] args) {
-        DailyTemperatures dailyTemperatures = new DailyTemperatures();
-        int[] arr = new int[]{89,62,70,58,47,47,46,76,100,70};
-        int[] ints = dailyTemperatures.dailyTemperatures1(arr);
-        for (int i : ints){
-            System.out.print(i);
-        }
-    }
 
+                                                                                                                                
+    //单调栈解法
     public int[] dailyTemperatures(int[] temperatures) {
         if(temperatures.length == 1){
             return new int[]{0};
         }
-        int[] retArr = new int[temperatures.length];
-
-        return retArr;
+        //定义一个单调栈存储遍历过的数
+        Stack<Integer> stack = new Stack<>();
+        int[] answer = new int[temperatures.length];
+        //入栈
+        for(int i = 0; i < temperatures.length; i++){
+            while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]){
+                int peekIndex = stack.pop();
+                answer[peekIndex] = i - peekIndex;
+            }
+            stack.push(i);
+        }
+        return answer;
     }
+
+    public static void main(String[] args) {
+        DailyTemperatures solution = new DailyTemperatures();
+        int[] temperatures = {73, 74, 75, 71, 69, 72, 76, 73};
+        int[] result = solution.dailyTemperatures(temperatures);
+        for (int val : result) {
+            System.out.print(val + " ");
+        } // 输出: 1 1 4 2 1 1 0 0
+    }
+
+
 }
